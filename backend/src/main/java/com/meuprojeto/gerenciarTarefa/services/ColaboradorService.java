@@ -40,5 +40,14 @@ public class ColaboradorService {
 		 
 		return new ColaboradorDTO(entity);
 	}
+	@Transactional
+	public ColaboradorDTO insert(ColaboradorDTO dto) {
+		Colaborador entity = new Colaborador();
+		entity.setNomeColaborador(dto.getNomeColaborador());
+		entity = repository.save(entity);
+		
+		return new ColaboradorDTO(entity);
+
+	}
 
 }
