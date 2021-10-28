@@ -1,14 +1,15 @@
 package com.meuprojeto.gerenciarTarefa.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.meuprojeto.gerenciarTarefa.entities.Colaborador;
+import com.meuprojeto.gerenciarTarefa.services.ColaboradorService;
 
 //implementa o controlador REST gerando os recursos
 
@@ -18,11 +19,13 @@ public class ColaboradorResource {
 	//criando o endpoint
 	//encapsula uma resposta HTTP
 	
+	@Autowired //injetando
+	private ColaboradorService service;
+	
 	@GetMapping
 	public ResponseEntity<List<Colaborador>>findAll(){
-		List<Colaborador>list = new ArrayList<>();
-		list.add(new Colaborador(1,"carlos"));
-		list.add(new Colaborador(2,"fernando"));
+		List<Colaborador>list = service.findAll();
+		
 		return ResponseEntity.ok().body(list);//resposta 200 ou seja foi com sucesso
 	}
 	

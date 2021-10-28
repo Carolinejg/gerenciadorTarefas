@@ -3,11 +3,23 @@ package com.meuprojeto.gerenciarTarefa.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 //serializable permite o objeto ser passado na rede
+
+@Entity
+@Table(name="tb_colaborador")
 public class Colaborador implements Serializable{
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)//para ser auto incremento
 	private int idColaborador;
-	 private String nomeColaborador;
+	private String nomeColaborador;
 		 
 	public Colaborador() {
 	
