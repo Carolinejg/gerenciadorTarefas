@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.meuprojeto.gerenciarTarefa.entities.Colaborador;
+import com.meuprojeto.gerenciarTarefa.dto.ColaboradorDTO;
 import com.meuprojeto.gerenciarTarefa.services.ColaboradorService;
 
 //implementa o controlador REST gerando os recursos
@@ -23,8 +23,8 @@ public class ColaboradorResource {
 	private ColaboradorService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Colaborador>>findAll(){
-		List<Colaborador>list = service.findAll();
+	public ResponseEntity<List<ColaboradorDTO>>findAll(){
+		List<ColaboradorDTO>list = service.findAll();
 		
 		return ResponseEntity.ok().body(list);//resposta 200 ou seja foi com sucesso
 	}
