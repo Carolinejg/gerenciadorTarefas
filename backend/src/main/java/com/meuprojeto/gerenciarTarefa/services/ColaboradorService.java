@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.meuprojeto.gerenciarTarefa.dto.ColaboradorDTO;
 import com.meuprojeto.gerenciarTarefa.entities.Colaborador;
 import com.meuprojeto.gerenciarTarefa.repositories.ColaboradorRepository;
-import com.meuprojeto.gerenciarTarefa.services.exceptions.EntityNotFoundException;
+import com.meuprojeto.gerenciarTarefa.services.exceptions.ResourceNotFoundException;
 
 //registra a classe como um componente que participa da injeção de dependencia
 
@@ -36,7 +38,7 @@ public class ColaboradorService {
 	@Transactional(readOnly=true)
 	public ColaboradorDTO findById(int id) {
 		Optional<Colaborador>obj = repository.findById(id);// optional evita trabalhar com valor nulo
-		Colaborador entity = obj.orElseThrow(()->new EntityNotFoundException("Entidade não encontrada"));
+		Colaborador entity = obj.orElseThrow(()->new ResourceNotFoundException("Entidade não encontrada"));
 		 
 		return new ColaboradorDTO(entity);
 	}
@@ -48,6 +50,20 @@ public class ColaboradorService {
 		
 		return new ColaboradorDTO(entity);
 
+	}
+	
+	@Transactional
+	public ColaboradorDTO update(int id,ColaboradorDTO dto) {
+		try {
+			Colaborador entity = repository.getOne(id);
+			entity.setNomeColaborador(dto.getNomeColaborador());
+			entity = repository.save(entity);
+			
+			return new ColaboradorDTO(entity);
+		}catch(EntityNotFoundException e) {
+			throw new  ResourceNotFoundException("Id não encontrado "+id);
+		}
+		
 	}
 
 }
