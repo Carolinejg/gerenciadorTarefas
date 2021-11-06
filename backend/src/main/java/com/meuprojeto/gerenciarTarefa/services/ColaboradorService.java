@@ -42,7 +42,7 @@ public class ColaboradorService {
 	public ColaboradorDTO findById(int id) {
 		Optional<Colaborador>obj = repository.findById(id);// optional evita trabalhar com valor nulo
 		Colaborador entity = obj.orElseThrow(()->new ResourceNotFoundException("Entidade não encontrada"));
-		 
+		
 		return new ColaboradorDTO(entity);
 	}
 	@Transactional
